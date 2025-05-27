@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Clock</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 48px;
+      text-align: center;
+      margin-top: 20%;
+      background: #f5f5f5;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">00:00:00</div>
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+      document.getElementById("clock").textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>

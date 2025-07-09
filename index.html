@@ -1,29 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Clock</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>In hóa đơn</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      font-size: 48px;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .invoice {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .no-print {
+      margin-top: 20px;
       text-align: center;
-      margin-top: 20%;
-      background: #f5f5f5;
-      color: #333;
+    }
+
+    @media print {
+      .no-print {
+        display: none;
+      }
+
+      html, body {
+        background: white;
+        height: auto;
+      }
+
+      .invoice {
+        box-shadow: none;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="clock">00:00:00</div>
+  <div class="invoice" id="content">
+    <h2>Đang tải nội dung in...</h2>
+  </div>
+
+  <div class="no-print">
+    <button onclick="window.print()">🖨 In</button>
+  </div>
+
   <script>
-    function updateClock() {
-      const now = new Date();
-      const timeString = now.toLocaleTimeString();
-      document.getElementById("clock").textContent = timeString;
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return decodeURIComponent(url.searchParams.get(name) || '');
     }
-    setInterval(updateClock, 1000);
-    updateClock();
+
+    const html = getParam('html');
+    if (html) {
+      document.getElementById("content").innerHTML = html;
+    } else {
+      document.getElementById("content").innerHTML = "<p>Không có nội dung để in.</p>";
+    }
   </script>
 </body>
 </html>
